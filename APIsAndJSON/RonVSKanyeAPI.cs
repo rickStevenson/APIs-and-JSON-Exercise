@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Data;
 
 
@@ -8,26 +9,36 @@ namespace APIsAndJSON
     {
         public static void RonVsKanyeQuotes()
         {
-            var client = new HttpClient();
+            int counter = 0;
+            while (counter < 5)
+            {
+                var client = new HttpClient();
 
-            var kanyeURL = "https://api.kanye.rest";
+                var kanyeURL = "https://api.kanye.rest";
 
-            var kanyeResponse = client.GetStringAsync(kanyeURL).Result;
+                var kanyeResponse = client.GetStringAsync(kanyeURL).Result;
 
-            var kanyeQuote = JObject.Parse(kanyeResponse).GetValue("quote").ToString();
+                var kanyeQuote = JObject.Parse(kanyeResponse).GetValue("quote").ToString();
 
-            Console.WriteLine(kanyeQuote);
-            Console.WriteLine();
+                Console.WriteLine($"Kanye: {kanyeQuote}");
+                Console.WriteLine();
 
-            var client2 = new HttpClient();
+                var client2 = new HttpClient();
 
-            var ronURL = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
+                var ronURL = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
 
-            var ronResponse = client2.GetStringAsync(ronURL).Result;
+                var ronResponse = client2.GetStringAsync(ronURL).Result;
 
-            var ronQuote = JArray.Parse(ronResponse).ToString().Replace('[', ' ').Replace(']', ' ').Trim();
+                var ronQuote = JArray.Parse(ronResponse).ToString().Replace('[', ' ').Replace(']', ' ').Trim();
 
-            Console.WriteLine(ronQuote);
+                Console.WriteLine($"Ron: {ronQuote}");
+                Console.WriteLine();
+                Console.WriteLine("_______________");
+                Console.WriteLine();
+                
+
+                counter++;
+            }
         }        
     }
 }
